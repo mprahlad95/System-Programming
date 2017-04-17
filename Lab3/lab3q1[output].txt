@@ -1,0 +1,24 @@
+[1410@icttelnet2 Lab3]$ lex lab3q1.l
+[1410@icttelnet2 Lab3]$ cc lex.yy.c -ll
+[1410@icttelnet2 Lab3]$ ./a.out
+Number of printf = 4
+Number of scanf = 2
+[1410@icttelnet2 Lab3]$ cat q1out.c
+/*This is a test C program for today's lab :3*/
+
+#include<stdio.h>
+int main()
+{
+   char str1[20], str2[30];
+
+   write("Enter name: ");       //Poop
+   read("%s", &str1);           //Bloop
+
+   write("Enter your website name: "); //Meow
+   read("%s", &str2);   //Arf
+
+   write("Entered Name: %s\n", str1);   //Warf
+   write("Entered Website:%s\n", str2); //Psst
+
+   return(0);
+}

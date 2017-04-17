@@ -1,0 +1,17 @@
+Write a lex program to calculate number of printf and scanf statements in a given valid C file and replace them with write and read respectively.
+
+%{
+#include<stdio.h>
+int nopf=0, nosf=0;
+%}
+%%
+printf  {nopf++;fprintf(yyout,"write");}
+scanf   {nosf++;fprintf(yyout,"read");}
+%%
+main()
+{
+yyin=fopen("test.c","r");
+yyout=fopen("q1out.c","w");
+yylex();
+printf("Number of printf = %d\nNumber of scanf = %d\n",nopf,nosf);
+}

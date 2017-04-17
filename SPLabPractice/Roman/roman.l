@@ -1,0 +1,16 @@
+%{
+#include<stdio.h>
+%}
+Thousands M{0-4}
+Hundreds (CM|CD|D?C{0-3})
+Tens (XC|XL|L?X{0-3})
+Ones {IX|IV|V?I{0-3})
+%%
+^{Thousands}{Hundreds}{Tens}{Ones}$	{printf("Valid!\n");}
+[#] {return;}
+.+ {printf("Invalid!\n");}
+%%
+main()
+{
+yylex();
+}

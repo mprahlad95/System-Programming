@@ -1,0 +1,44 @@
+Write a lex program to count the number of occurences of positive
+integers, negative integers, positive fractions and negative fractions
+in a given equation.
+
+%{
+#include<stdio.h>
+int pi=0, ni=0, pf=0, nf=0;
+%}
+digit [0-9]
+digits {digit}+
+posint {digits}|"+"{digits}
+negint "-"{digits}
+frac {digit}*"."{digits}
+posfrac {frac}|"+"{frac}
+negfrac "-"{frac}
+%%
+{posint} {pi++;}
+{negint} {ni++;}
+{posfrac} {pf++;}
+{negfrac} {nf++;}
+[#] {return;}
+%%
+main()
+{
+yylex();
+printf("\n\nPositive Integers = %d\n",pi);
+printf("Negative Integers = %d\n",ni);
+printf("Positive Fractions = %d\n",pf);
+printf("Negative Fractions = %d\n",nf);
+}
+
+"lab2q2.l" 26L, 468C written
+[1410@ictlinux ~]$ lex lab2q2.l
+[1410@ictlinux ~]$ cc lex.yy.c -ll
+[1410@ictlinux ~]$ ./a.out
+-.12 +.12 12 -12 -3.15 +4.16 44 44.44
+
+#
+
+
+Positive Integers = 2
+Negative Integers = 1
+Positive Fractions = 3
+Negative Fractions = 2

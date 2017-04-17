@@ -1,0 +1,33 @@
+%{
+#include<stdio.h>
+#include<math.h>
+double vbltable[26];
+%}
+%union {double val; int vblno;}
+%token <val> NUM
+%token <vblno> ID
+%token ADD MUL DIV SUB SQRT LOG OB CB COMMA AOP ENTER 
+%type <val> EXP
+%%
+stmt_list: stmt ENTER | stmt_list stmt ENTER;
+stmt: ID AOP EXP {vbltable[$1] = $3; printf("Set %f!\n",$3);}
+    | EXP {printf("=%g\n",$1);}
+EXP: ADD OB EXP COMMA EXP CB {$$ = $3 + $5;}
+   | MUL OB EXP COMMA EXP CB {$$ = $3 * $5;}
+   | DIV OB EXP COMMA EXP CB {$$ = $3 / $5;}
+   | SUB OB EXP COMMA EXP CB {$$ = $3 - $5;}
+   | LOG OB EXP CB {$$ = log($3);}
+   | SQRT OB EXP CB {$$ = sqrt($3);}
+   | OB EXP CB {$$ = $2;}
+   | NUM {$$ = $1;}
+   | ID {$$ = vbltable[$1];}
+%%
+main()
+{
+yyparse();
+}
+yyerror()
+{
+printf("\nInvalid Expression!\n");
+}
+

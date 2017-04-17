@@ -1,0 +1,6 @@
+Number of lines = 8
+Number of words = 9
+Number of capital letters = 0
+Number of small letters = 40
+Number of digits = 4
+Number of special characters = 8

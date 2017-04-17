@@ -1,0 +1,2 @@
+write("Kashish");
+read();

@@ -1,0 +1,22 @@
+Write a lex program to count the number of comment statements in a given calid C file.
+
+%{
+#include<stdio.h>
+int nocom=0;
+%}
+%%
+"//"    {nocom++;}
+"/*"    {nocom++;}
+%%
+main()
+{
+yyin=fopen("test.c","r");
+yyout=fopen("q2out.c","w");
+yylex();
+printf("Number of comments = %d\n",nocom);
+}
+
+Output:
+
+[1410@icttelnet2 Lab3]$ ./a.out
+Number of comments = 7

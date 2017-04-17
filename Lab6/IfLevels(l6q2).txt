@@ -1,0 +1,50 @@
+.....................................................lex
+%{
+#include "y.tab.h"
+%}
+%%
+"if"       return IF;
+"=="       return OP;
+"<"        return OP;
+">"        return OP;
+">="       return OP;
+"<="       return OP;
+"!="       return OP;
+[{()}]     return *yytext;
+.          return SIMP;
+%%
+main()
+{
+yyin=fopen("test.c","r");
+yyparse();
+}
+....................................................yacc
+%{
+#include<stdio.h>
+int level=0;
+%}
+%token IF SIMP OP
+%%
+stmt: if_stmt    {printf("\nValid levels=%d\n",level);}
+    | error      { printf("---ERROR---\n");}
+;
+if_stmt: IFCOND EXP
+       | IFCOND if_stmt
+       | IFCOND '{' EXP '}'
+       | IFCOND '{' if_stmt '}'
+;
+IFCOND:  IF '(' EXP ')' {level++;}
+;
+EXP: SIMP OP SIMP | SIMP
+;
+%%
+yyerror(char *s)
+{
+  printf("Invalid");
+}
+................................................program
+if(a<b)
+if(b>a)
+a==b
+.................................................output
+Valid levels=2

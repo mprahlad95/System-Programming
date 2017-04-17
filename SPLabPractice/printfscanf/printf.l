@@ -1,0 +1,25 @@
+%{
+#include<stdio.h>
+#include<string.h>
+int nopf=0,nosf=0;
+%}
+%%
+printf	{nopf++;fprintf(yyout,"write");}
+scanf	{nosf++;fprintf(yyout,"read");}
+%%
+main()
+{
+char command[50];
+yyin=fopen("testprintf.c","r");
+yyout=fopen("testprintfout.c","w");
+yylex();
+printf("Number of printf= %d\n",nopf);
+printf("Number of scanf = %d\n",nosf);
+strcpy(command,"ls -l");
+system(command);
+}
+yyerror()
+{
+printf("File not found");
+}
+

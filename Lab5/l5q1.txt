@@ -1,0 +1,47 @@
+Write a lex and a yacc program to validate while loop syntax in a C program.
+
+..........................................................l5q1.l
+%{
+#include"y.tab.h"
+%}
+%%
+"while" {return key;}
+"("     {return obrack;}
+")"     {return cbrack;}
+" "     {return space;}
+";"     {return sc;}
+"int"|"char"|"float" {return rtype;}
+"&&"|"||" {return andor;}
+[a-z]+  {return ch;}
+[0-9]+  {return num;}
+">"|"<"|"<="|">="|"=="|"!=" {return op;}
+"{"     {return ocbrack;}
+"}"     {return ccbrack;}
+%%
+..........................................................l5q1.y
+%{
+#include<stdio.h>
+extern FILE *yyin
+%}
+%token key obrack cbrack space sc rtype andor ch num op ocbrack ccbrack
+%start S
+%%
+S: key obrack X cbrack ocbrack Y ccbrack {printf("\nCorrect!");}
+X: num | variable X1 | rtype space variable sc ;
+X1: variable X1 | ;
+variable: ch num | ch;
+Y: obrack M cbrack | M | N;
+M: variable op Z;
+Z: variable | num;
+N: Y andor M;
+%%
+main()
+{
+yyin=fopen("test.c","r");
+yylex();
+}
+yyerror()
+{
+printf("Invalid\n");
+}
+................................................................

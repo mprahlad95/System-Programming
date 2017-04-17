@@ -1,0 +1,61 @@
+Program 1 - matchany.l
+
+%{
+#include<stdio.h>
+%}
+%%
+.+ {printf("Matched String %s", yytext);return;}
+%%
+main()
+{
+yylex();
+}
+
+Program 2 - novow.l
+
+%{
+#include<stdio.h>
+int vow=0,cons=0;
+%}
+%%
+[aeiouAEIOU] {vow++;}
+[a-zA-Z] {cons++;}
+[#] {printf("Vowels - %d\nConsonants - %d",vow,cons);return;}
+%%
+main()
+{
+yylex();
+}
+
+Program 3 - matchword.l
+
+%{
+#include<stdio.h>
+%}
+%%
+is|was|are|were {printf("Matched Verb - %s",yytext);}
+[#] {return;}
+%%
+main()
+{
+yylex();
+}
+
+Program 4 - countchar.l
+
+%{
+#include<stdio.h>
+int noChars=1,noWords=1,noSpaces=1,noNewLines=-1;
+%}
+%%
+[a-zA-Z] {noChars++;}
+[ ] {noSpaces++;}
+." " {noWords++;}
+[\n] {noNewLines++;}
+[#] {printf("Characters = %d\nWords = %d\nSpaces = %d\nNew Lines = %d\n",noChars
+,noWords,noSpaces,noNewLines);return;}
+%%
+main()
+{
+yylex();
+}

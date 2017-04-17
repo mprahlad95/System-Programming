@@ -1,0 +1,16 @@
+#include<stdlib.h>
+#include<string.h>
+void main(int argv, char* argc[])
+{
+ char name[20] = "time ";
+ int i=1;
+ while(argc[i]!=NULL)
+ {
+  strcat(name,argc[i]);
+  strcat(name," ");
+  i++;
+ }
+ printf("\n");
+ system(name);
+}
+ 
